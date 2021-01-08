@@ -1,0 +1,51 @@
+- name: '{{ wmi_exporter_install_type }} : prepare common arguments dict'
+  set_fact:
+    wmi_exporter_arguments_dict:
+
+      - name:
+          package: 'ENABLED_COLLECTORS'
+          choco: '/EnabledCollectors'
+        value: '{{ wmi_exporter_enabled_collectors }}'
+
+      - name:
+          package: 'LISTEN_ADDR'
+          choco: '/ListenAddress'
+        value: '{{ wmi_exporter_listen_addr }}'
+
+      - name:
+          package: 'LISTEN_PORT'
+          choco: '/ListenPort'
+        value: '{{ wmi_exporter_listen_port }}'
+
+      - name:
+          package: 'METRICS_PATH'
+          choco: '/MetricsPath'
+        value: '{{ wmi_exporter_metrics_path }}'
+
+      - name:
+          package: 'TEXTFILE_DIR'
+          choco: '/TextFileDir'
+        value: '{{ wmi_exporter_textfile_dir }}'
+
+      - name:
+          package: 'EXTRA_FLAGS'
+          choco: '/ExtraFlags'
+        value: '{{ wmi_exporter_extra_flags }}'
+
+- name: '{{ wmi_exporter_install_type }} : prepare arguments'
+  set_fact:
+    wmi_exporter_install_arguments: |
+      {{
+        wmi_exporter_install_arguments | default([]) +
+        [
+          windows_exporter_argument.name[wmi_exporter_install_type] ~ '=' ~
+          windows_exporter_argument.value
+        ]
+      }}
+  when:
+    - windows_exporter_argument.value is defined
+    - windows_exporter_argument.value
+  loop: "{{ wmi_exporter_arguments_dict }}"
+  loop_control:
+    loop_var: windows_exporter_argument
+
