@@ -1,6 +1,9 @@
 ---
 # defaults file for sbaerlocher.wmi_exporter
 
+# Applicable values: package | choco
+wmi_exporter_install_type: package
+
 # The latest version of the wmi_exporter is automatically
 # calculated if 'wmi_exporter_version' is not set.
 # wmi_exporter_version: 0.13.0
@@ -33,9 +36,6 @@ wmi_exporter_extra_flags:
 
 # Download directory for the wmi export installations files.
 wmi_exporter_download_directory: "{{ ansible_env.TEMP }}\\wmi_exporter"
-
-# Whether to force installation by package, i.e ignore existing choco
-wmi_exporter_force_package: false
 
 # Download the file on the local end, only used if not installing using choco
 wmi_exporter_local_download: false

@@ -14,7 +14,18 @@ ansible-galaxy install sbaerlocher.wmi_exporter
 
 ## Requirements
 
+- Ansible version 2.9+
+- [ansible.windows](https://galaxy.ansible.com/ansible/windows) collection 
+
 ## Role Variables
+
+### Type of install
+
+Applicable values: `package` or `choco`. Defaults to `package`
+
+```yml
+wmi_exporter_install_type: package
+```
 
 ### Version
 
@@ -66,12 +77,6 @@ Allows passing full CLI flags. Defaults to an empty string.
 
 ```yml
 wmi_exporter_extra_flags:
-```
-
-Whether to ignore existing choco installation and force 'package' type installation. Defaults to `false`.
-
-```yml
-wmi_exporter_force_package: false
 ```
 
 Download the file on the local end, only used if not installing using choco. Defaults to `false`.

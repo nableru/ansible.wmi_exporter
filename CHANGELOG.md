@@ -3,6 +3,13 @@
 This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html)
 and [human-readable changelog](https://keepachangelog.com/en/1.0.0/).
 
+## 1.3.2
+
+- Change logic. Look the sources
+- Add `wmi_exporter_install_type` option
+- Remove `wmi_exporter_force_package` option
+- Add checks of product_id (GUID) for package install
+
 ## 1.3.1
 
 ### Fixed

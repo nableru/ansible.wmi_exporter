@@ -1,0 +1,32 @@
+---
+# tasks file for sbaerlocher.wmi_exporter
+
+- name: 'a minute of care for unobservant users'
+  fail:
+    msg: |
+      `wmi_exporter_force_package` removed
+      please set `wmi_exporter_install_type` to `package`
+  when: wmi_exporter_force_package is defined
+
+- name: 'main : include version search'
+  include_tasks: version.yml
+  when: wmi_exporter_version is undefined
+
+- name: 'main : check Chocolatey is installed'
+  block:
+
+    - name: 'main : check if choco exist'
+      ansible.windows.win_stat:
+        path: "{{ ansible_facts.env.ProgramData }}\\Chocolatey\\bin\\choco.exe"
+      register: wmi_exporter_choco_exists
+
+    - fail:
+        msg: |
+          Chocolatey is't installed.
+          Please install it or set `wmi_exporter_install_type` to `package`
+      when: not wmi_exporter_choco_exists.stat.exists
+
+  when: wmi_exporter_install_type == 'choco'
+
+- name: 'main : include install type'
+  include_tasks: 'install/{{ wmi_exporter_install_type }}.yml'
